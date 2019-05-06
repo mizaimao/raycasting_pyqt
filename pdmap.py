@@ -30,7 +30,7 @@ class level_class:
 	def add_block(self, startX=120, startY=180, lengthX=100, lengthY=100):
 		for x in range(lengthX):
 			for y in range(lengthY):
-				self.level[y][x].high=100
+				self.level[startY+y][startX+x].high=100
 				
 
 

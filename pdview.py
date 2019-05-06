@@ -8,6 +8,9 @@ import sys, random
 import math
 
 
+STEP_MOVE = 10
+STEP_ROTATE = 8
+
 class display(QWidget):
 	def __init__(self, level, player):
 		super().__init__()
@@ -17,9 +20,9 @@ class display(QWidget):
 		self.initUI()
 		self.level = level
 		self.player = player
-		self.X = 150
-		self.Y = 250
-		self.direction = 0
+		self.X = 130
+		self.Y = 150
+		self.direction = 146
 		self.dt = 1
 
 	def initUI(self):	  
@@ -30,17 +33,17 @@ class display(QWidget):
 	def keyPressEvent(self, event):
 		key = event.key()
 		if key == Qt.Key_Left:
-			self.X -= 10
+			self.X -= STEP_MOVE
 		elif key == Qt.Key_Right:
-			self.X += 10
+			self.X += STEP_MOVE
 		elif key == Qt.Key_Down:
-			self.Y += 10
+			self.Y += STEP_MOVE
 		elif key == Qt.Key_Up:
-			self.Y -= 10
+			self.Y -= STEP_MOVE
 		elif key == Qt.Key_Q:
-			self.updateDirection(1)
+			self.updateDirection(STEP_ROTATE)
 		elif key == Qt.Key_E:
-			self.updateDirection(-1)
+			self.updateDirection(-STEP_ROTATE)
 		else:
 			pass
 		self.update()
@@ -65,7 +68,6 @@ class display(QWidget):
 		#qp.begin(self)
 		X = self.X 
 		Y = self.Y
-		
 		qp.setPen(Qt.black)	# mark standing point
 		qp.drawPoint(X, Y)
 		#qp.drawLine(0,self.height/2,self.width, self.height/2)
@@ -79,11 +81,9 @@ class display(QWidget):
 		#print('angel%d'%direction)
 		for ray in range(1, self.width + 1): # range(-gamma//2, gamma//2+1):
 			theta = gamma / self.width * ray - gamma / 2
-			print(theta)		
-	
 			x = X; y = Y; dx = 1; dy = dx * math.tan(math.radians(theta))
 			qp.setPen(Qt.green)
-			
+			path_counter = 0
 			while x < self.width and x > -10 and y < self.height and y > -10 and self.level.level[int(x)][int(y)].high == 0:
 				dt = self.dt 
 				if direction >= 0:
@@ -92,7 +92,9 @@ class display(QWidget):
 				else:
 					y = y - dy - dx/dt
 					x = x - dx + dy/dt
-				qp.drawPoint(x, y)
+				if path_counter % 2 == 0:
+					qp.drawPoint(x, y)
+				path_counter += 1
 			qp.setPen(Qt.red)
 			qp.drawPoint(x, y)
 			
@@ -133,12 +135,9 @@ class display(QWidget):
 			last_x = drawx
 			#qp.drawLine(drawx, self.height/2 - self.height * upperview, drawx, self.height/2 + self.height * lowerview)
 			drawx_counter += 1
-
-
 		qp.end()
 		
 if __name__ == '__main__':
-	
 	app = QApplication(sys.argv)
 	ex = display()
 	sys.exit(app.exec_())

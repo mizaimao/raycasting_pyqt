@@ -6,7 +6,7 @@ Implementation of raycasting method used in Wolfenstein 3D.
 Inspired by this video, https://youtu.be/eOCQfxRQ2pY  , which talks about map renderer used in Wolfenstein 3D.  
 id Software used raycasting method to map 2D information onto screen and make it look like 3D, a marvelous engineering technique!  
 ## Demo
- ![](gif/rotate.gif)   ![](gif/move.gif)
+ ![](gif/400x600.gif)
 ## Run
 **Requirements**: PyQt5  
 Execute ```driver.py``` to open the window.  
