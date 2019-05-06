@@ -77,10 +77,13 @@ class display(QWidget):
 		drawx_counter = 0
 		last_low = 0; last_high = 0; last_x = 0
 		#print('angel%d'%direction)
-		for theta in range(-gamma//2, gamma//2+1):
+		for ray in range(1, self.width + 1): # range(-gamma//2, gamma//2+1):
+			theta = gamma / self.width * ray - gamma / 2
+			print(theta)		
+	
 			x = X; y = Y; dx = 1; dy = dx * math.tan(math.radians(theta))
-			#print('xy',x, y)
 			qp.setPen(Qt.green)
+			
 			while x < self.width and x > -10 and y < self.height and y > -10 and self.level.level[int(x)][int(y)].high == 0:
 				dt = self.dt 
 				if direction >= 0:
@@ -109,7 +112,8 @@ class display(QWidget):
 				lowerview = self.player.height / halfview / 2
 			else:	# sees entire lower part of wall
 				lowerview = 1 / 2
-			drawx = round(self.width/gamma * drawx_counter)
+			#adrawx = round(self.width/gamma * drawx_counter)
+			drawx = drawx_counter
 			#print(self.height/2 + self.height * upperview, self.height/2 - self.height * lowerview)
 			drawy_low = self.height/2 - self.height * upperview
 			drawy_high = self.height/2 + self.height * lowerview
@@ -119,7 +123,7 @@ class display(QWidget):
 				polygon.append(QPointF(last_x, last_high))
 				polygon.append(QPointF(drawx, drawy_high))
 				polygon.append(QPointF(drawx, drawy_low))
-				wallcolor = QColor(255,p/self.diagonal*255,p/self.diagonal*255)
+				wallcolor = QColor(255,p/self.diagonal*255,  p/self.diagonal*255)
 				qp.setPen(wallcolor)
 				qp.drawConvexPolygon(polygon)
 				qp.setBrush(QBrush(wallcolor))
