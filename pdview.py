@@ -9,7 +9,7 @@ import math
 
 
 STEP_MOVE = 10
-STEP_ROTATE = 8
+STEP_ROTATE = 15
 
 class display(QWidget):
 	def __init__(self, level, player):

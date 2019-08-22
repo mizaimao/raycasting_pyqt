@@ -107,20 +107,21 @@ def generate(rows = X, cols = Y):
 
 
 if __name__ == '__main__':
-	try:
-		x = int(sys.argv[1])
-		y = int(sys.argv[2])
-		pixel = generate(x, y)
-	except:
-		pixel = generate()
-	
-	import numpy as np
-	import cv2
-	a = np.asarray(pixel, dtype=np.uint8)
-	a[a>0] = 100
-	a[a==0]=255
-	a[a==100]=0
-	cv2.imshow('image', a)
-	k = cv2.waitKey(0)
-	if k:
-    		cv2.destroyAllWindows()
+    try:
+        x = int(sys.argv[1])
+        y = int(sys.argv[2])
+    except:
+        x = X
+        y = Y
+    import numpy as np
+    import cv2
+    k = ord('n')
+    while k==ord('n'):
+        pixel = generate(x, y)
+        a = np.asarray(pixel, dtype=np.uint8)
+        a[a>0] = 100
+        a[a==0]=255
+        a[a==100]=0
+        cv2.imshow('image', a)
+        k = cv2.waitKey(0)
+    cv2.destroyAllWindows()
